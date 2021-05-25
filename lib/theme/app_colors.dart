@@ -6,5 +6,5 @@ abstract class AppColors {
 
 class AppColorsDefault implements AppColors {
   @override
-  Color get background => Color(0xFF40B38C);
+  Color get background => const Color(0xFF40B38C);
 }

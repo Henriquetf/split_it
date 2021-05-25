@@ -9,7 +9,7 @@ abstract class AppGradients {
 
 class AppGradientsDefault implements AppGradients {
   @override
-  Gradient get background => LinearGradient(
+  Gradient get background => const LinearGradient(
         colors: [
           Color(0xFF40B28C),
           Color(0xFF45CC93),
@@ -22,7 +22,7 @@ class AppGradientsDefault implements AppGradients {
       );
 
   @override
-  Gradient get rect => LinearGradient(
+  Gradient get rect => const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [

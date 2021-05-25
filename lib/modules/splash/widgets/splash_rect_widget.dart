@@ -32,7 +32,7 @@ class SplashRect extends StatelessWidget {
           width: 198.0,
           height: 98.0,
         ),
-        SizedBox(
+        const SizedBox(
           height: 24.0,
         ),
         _buildRect(
