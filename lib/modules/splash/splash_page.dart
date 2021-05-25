@@ -17,13 +17,9 @@ class SplashPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SplashRect(),
+                SplashRect(direction: SplashRectDirection.LEFT),
                 _buildLogo(),
-                SplashRect(
-                  direction: SplashRectDirection.LEFT,
-                  verticalDirection: VerticalDirection.up,
-                  horizontalDirection: CrossAxisAlignment.end,
-                ),
+                SplashRect(direction: SplashRectDirection.RIGHT),
               ],
             ),
           ),

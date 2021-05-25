@@ -1,53 +1,67 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:split_it/theme/app_theme.dart';
 
 enum SplashRectDirection {
   LEFT,
   RIGHT,
 }
 
-const _rectLeftAsset = "assets/images/rect-left.png";
-const _rectRightAsset = "assets/images/rect-right.png";
-
 class SplashRect extends StatelessWidget {
   final SplashRectDirection direction;
-  final VerticalDirection verticalDirection;
-  final CrossAxisAlignment horizontalDirection;
 
   const SplashRect({
     Key? key,
-    this.direction = SplashRectDirection.RIGHT,
-    this.verticalDirection = VerticalDirection.down,
-    this.horizontalDirection = CrossAxisAlignment.start,
+    required this.direction,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final assetName = direction == SplashRectDirection.RIGHT ? _rectRightAsset : _rectLeftAsset;
+    final isLeftDirection = direction == SplashRectDirection.LEFT;
+    final rotateAngle = isLeftDirection ? pi : 0.0;
+    final verticalDirection = isLeftDirection ? VerticalDirection.down : VerticalDirection.up;
+    final horizontalDirection = isLeftDirection ? CrossAxisAlignment.start : CrossAxisAlignment.end;
 
     return Column(
       verticalDirection: verticalDirection,
       crossAxisAlignment: horizontalDirection,
       children: [
-        Opacity(
-          opacity: 0.2,
-          child: Image.asset(
-            assetName,
-            width: 198.0,
-            height: 98.0,
-          ),
+        _buildRect(
+          rotateAngle,
+          width: 198.0,
+          height: 98.0,
         ),
         SizedBox(
           height: 24.0,
         ),
-        Opacity(
-          opacity: 0.2,
-          child: Image.asset(
-            assetName,
-            width: 114.0,
-            height: 58.0,
-          ),
+        _buildRect(
+          rotateAngle,
+          width: 114.0,
+          height: 58.0,
         ),
       ],
+    );
+  }
+
+  Widget _buildRect(
+    double rotateAngle, {
+    required double width,
+    required double height,
+  }) {
+    return Transform.rotate(
+      angle: rotateAngle,
+      child: Opacity(
+        opacity: 0.2,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.gradients.rect,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          width: width,
+          height: height,
+        ),
+      ),
     );
   }
 }
