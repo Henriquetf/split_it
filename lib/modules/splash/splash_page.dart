@@ -17,9 +17,9 @@ class SplashPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SplashRect(direction: SplashRectDirection.LEFT),
+                SplashRect(alignment: SplashRectAlignment.LEFT),
                 _buildLogo(),
-                SplashRect(direction: SplashRectDirection.RIGHT),
+                SplashRect(alignment: SplashRectAlignment.RIGHT),
               ],
             ),
           ),
@@ -30,7 +30,7 @@ class SplashPage extends StatelessWidget {
 
   Widget _buildLogo() {
     return Image.asset(
-      "assets/images/logo.png",
+      AppTheme.assets.images.logo,
       width: 128.0,
       height: 112.0,
     );

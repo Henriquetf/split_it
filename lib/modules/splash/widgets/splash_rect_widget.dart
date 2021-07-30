@@ -3,25 +3,25 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:split_it/theme/app_theme.dart';
 
-enum SplashRectDirection {
+enum SplashRectAlignment {
   LEFT,
   RIGHT,
 }
 
 class SplashRect extends StatelessWidget {
-  final SplashRectDirection direction;
+  final SplashRectAlignment alignment;
 
   const SplashRect({
     Key? key,
-    required this.direction,
+    required this.alignment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isLeftDirection = direction == SplashRectDirection.LEFT;
-    final rotateAngle = isLeftDirection ? pi : 0.0;
-    final verticalDirection = isLeftDirection ? VerticalDirection.down : VerticalDirection.up;
-    final horizontalDirection = isLeftDirection ? CrossAxisAlignment.start : CrossAxisAlignment.end;
+    final isLeftAlignment = alignment == SplashRectAlignment.LEFT;
+    final rotateAngle = isLeftAlignment ? 0.0 : pi;
+    final verticalDirection = isLeftAlignment ? VerticalDirection.down : VerticalDirection.up;
+    final horizontalDirection = isLeftAlignment ? CrossAxisAlignment.start : CrossAxisAlignment.end;
 
     return Column(
       verticalDirection: verticalDirection,
