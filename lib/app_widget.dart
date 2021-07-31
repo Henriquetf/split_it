@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:split_it/modules/splash/splash_page.dart';
+import 'package:split_it/modules/login/pages/login_page.dart';
 
 class SplitItWidget extends StatelessWidget {
   @override
@@ -7,7 +7,7 @@ class SplitItWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Split.it",
-      home: SplashPage(),
+      home: LoginPage(),
     );
   }
 }
