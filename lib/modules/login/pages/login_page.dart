@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:split_it/modules/home/pages/home_page.dart';
+import 'package:split_it/modules/login/pages/login_controller.dart';
+import 'package:split_it/modules/login/pages/login_state.dart';
 import 'package:split_it/widgets/gradient_text_widget.dart';
 import 'package:split_it/modules/login/widgets/social_button_widget.dart';
 import 'package:split_it/modules/login/widgets/login_tile_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = "/login";
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -12,6 +17,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginController controller;
+
+  @override
+  void initState() {
+    controller = LoginController(
+      onUpdate: () {
+        if (controller.state is LoginStateSuccess) {
+          final user = (controller.state as LoginStateSuccess).user;
+
+          Navigator.of(context).pushReplacementNamed(HomePage.routeName, arguments: user);
+        } else {
+          setState(() {});
+        }
+      },
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +78,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildLoginArea() {
     return Column(
       children: [
-        _buildLoginText(),
+        if (controller.state is LoginStateLoading)
+          CircularProgressIndicator()
+        else
+          _buildLoginText(),
         SizedBox(
           height: 32.0,
         ),
@@ -86,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SocialButton(
-          onTap: () {},
+          onTap: controller.googleSignIn,
           child: LoginTile(
             icon: Image.asset(
               AppTheme.assets.images.googleIcon,
@@ -103,21 +130,21 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(
           height: 12.0,
         ),
-        SocialButton(
-          onTap: () {},
-          child: LoginTile(
-            icon: Image.asset(
-              AppTheme.assets.images.appleIcon,
-              width: 24.0,
-              height: 24.0,
-            ),
-            text: Text(
-              'Entrar com Apple',
-              textAlign: TextAlign.center,
-              style: AppTheme.textStyles.button,
-            ),
-          ),
-        ),
+        // SocialButton(
+        //   onTap: () {},
+        //   child: LoginTile(
+        //     icon: Image.asset(
+        //       AppTheme.assets.images.appleIcon,
+        //       width: 24.0,
+        //       height: 24.0,
+        //     ),
+        //     text: Text(
+        //       'Entrar com Apple',
+        //       textAlign: TextAlign.center,
+        //       style: AppTheme.textStyles.button,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

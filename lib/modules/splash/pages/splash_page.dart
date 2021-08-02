@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:split_it/firebase_initializer.dart';
+import 'package:split_it/modules/error/pages/error_page.dart';
+import 'package:split_it/modules/login/pages/login_page.dart';
 import 'package:split_it/modules/splash/widgets/splash_rect_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class SplashPage extends StatelessWidget {
+  static const routeName = "/splash";
+
+  void _onCompleted(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
+
+  void _onError(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(ErrorPage.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: FirebaseInitializer(
+        onCompleted: () => this._onCompleted(context),
+        onError: () => this._onError(context),
+        child: _buildBody(),
+      ),
     );
   }
 
