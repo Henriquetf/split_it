@@ -1,38 +1,44 @@
 import 'package:flutter/scheduler.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:split_it/modules/login/models/user_model.dart';
 import 'package:split_it/modules/login/pages/login_state.dart';
+import 'package:split_it/modules/login/services/login_service.dart';
 
 class LoginController {
   LoginState state = LoginStateInitial();
-  VoidCallback onUpdate;
 
-  LoginController({required this.onUpdate});
+  final VoidCallback onUpdate;
+  final LoginService service;
+  Function(LoginState state)? onChange;
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-    ],
-  );
+  LoginController({required this.onUpdate, required this.service});
 
   Future<void> googleSignIn() async {
     try {
       state = LoginStateLoading();
-      onUpdate();
+      update();
 
-      final account = await _googleSignIn.signIn();
+      final user = await service.googleSignIn();
 
-      if (account == null) {
+      if (user == null) {
         throw Exception("User login aborted.");
       }
 
-      final newUser = UserModel.fromGoogleAccount(account);
-
-      state = LoginStateSuccess(user: newUser);
-      onUpdate();
+      state = LoginStateSuccess(user: user);
+      update();
     } catch (error) {
       state = LoginStateFailure(message: error.toString());
-      onUpdate();
+      update();
     }
+  }
+
+  void update() {
+    onUpdate();
+
+    if (onChange != null) {
+      onChange!(state);
+    }
+  }
+
+  void listen(Function(LoginState state) onChange) {
+    this.onChange = onChange;
   }
 }

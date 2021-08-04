@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:split_it/modules/home/pages/home_page.dart';
 import 'package:split_it/modules/login/pages/login_controller.dart';
 import 'package:split_it/modules/login/pages/login_state.dart';
+import 'package:split_it/modules/login/services/login_service.dart';
 import 'package:split_it/widgets/gradient_text_widget.dart';
 import 'package:split_it/modules/login/widgets/social_button_widget.dart';
 import 'package:split_it/modules/login/widgets/login_tile_widget.dart';
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     controller = LoginController(
+      service: GoogleLoginService(),
       onUpdate: () {
         if (controller.state is LoginStateSuccess) {
           final user = (controller.state as LoginStateSuccess).user;
